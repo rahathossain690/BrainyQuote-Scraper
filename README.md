@@ -22,8 +22,9 @@ python brainyQuote-Scraper.py -f Inspiration -o My-quotes
 ```
 Here
 1. -l or --link argument is for link.
-2. -f is for the filename-without-extension to scrap from. It always takes the extension as html. (It is mandatory to have -f or -l)
-3. -o or --output stands for the filename(without extension) to save data. It is not mandatory. Takes 'output' as default value if not specified.
-4. -r is flag for reading data. It is not mandatory. Shows data on terminal if specified.
+2. -f is for the filename-without-extension to scrap from. It always takes the extension as html. The file should be in the directory with BrainyQuote-Sraper.py.
+3. It is mandatory to have -l or -f argument.
+4. -o or --output stands for the filename(without extension) to save data. It is not mandatory. Takes 'output' as default value if not specified.
+5. -r is flag for reading data. It is not mandatory. Shows data on terminal if specified.
 
 Thank you.
