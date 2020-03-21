@@ -1,12 +1,17 @@
 import requests, argparse, csv
 from bs4 import BeautifulSoup as soup
 
-def scraper(link, file):
+def scraper(link, file, readFromFile):
 	try:
-		# sends request
-		r = requests.get(url = link)
-		# gets data 
-		data = r.text
+		data = ""
+		if readFromFile == None:
+			# sends request
+			r = requests.get(url = link)
+			# gets data 
+			data = r.text
+		else:
+			with open(readFromFile + ".html") as filee:
+				data = filee.read()
 		page_soup = soup(data, "html.parser")
 		# BrainyQuotes:Quote's title is 'view quotes'
 		# BrainyQuotes:Author's title is 'view author'
@@ -21,6 +26,7 @@ def scraper(link, file):
 		while i < len(quote):
 			tables.append([quote[i], author[i]])
 			i += 1
+		#print(tables)
 		# writes to file
 		writeCSV(tables, file)
 	except:
@@ -63,18 +69,20 @@ if __name__ == '__main__':
 		ap.add_argument("-l", "--link", help="Page link of Brainyquote")
 		ap.add_argument("-o", "--output", help="Output file-name-only")
 		ap.add_argument("-r", "--read", action='store_true', help="Read flag")
+		ap.add_argument("-f", "--file", help="Filename to srap from")
 		args = vars(ap.parse_args())
+		print(args)
 
 		# assigns values to missing arguments if necessery
 		if args["output"] == None:
 			args["output"] = "output"
 
 		# checks if link is missing, if yes then raises exception
-		if args["link"] == None or args == None:
-			raise Exception("-l or --link is mandatory.")
+		if args["link"] == None and args["file"] == None:
+			raise Exception("-l or -f is mandatory.")
 
 		# calls scraper function
-		scraper(args["link"], args["output"])
+		scraper(link = args["link"], file = args["output"], readFromFile = args["file"])
 
 		#if read flag is true then read
 		if args["read"]:
